@@ -1,0 +1,15 @@
+<br />
+<%= form_for(@user, :url => { :action => "update" } ) do |f| %>
+  <div class="field"><%= f.label :Mot_de_Passe %></div>
+  <div class="field-block"><%= f.password_field :password, :autocomplete => true, :class => "in"  %></div>
+  <div class="field"><%= f.label :Confirmation_du_Mot_de_Passe %></div>
+  <div class="field-block"><%= f.password_field :password_confirmation, :class => "in" %></div>
+  <div class="field">Rédacteur ?</div>
+<% if @user.redacteur == true %>
+<div class="field-block"><i>Oui : <%= f.radio_button :redacteur, "1",:checked => true %> | Non : <%= f.radio_button :redacteur, "0" %></i></div>
+<% else %>
+<div class="field-block"><i>Oui : <%= f.radio_button :redacteur, "1" %> | Non : <%= f.radio_button :redacteur, "0",:checked => true %></i></div>
+<% end %>
+  <div><%= f.submit "Éditer l'Utilisateur", :class => "button" %></div>
+  <br />
+<% end %>

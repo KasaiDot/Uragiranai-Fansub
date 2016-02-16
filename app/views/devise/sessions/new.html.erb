@@ -1,0 +1,25 @@
+<div class="auth-form" id="login">		
+<div class="form">
+<p class="alert"><%= alert %></p>
+
+<h1>Connexion</h1>
+
+<table class="form">
+	<tr>
+		<td id="deviseleft">
+			<%= form_for(resource, :as => resource_name, :url => session_path(resource_name)) do |f| %>
+  			<div class="field"><%= f.label :email %></div>
+  			<div class="field-block"><%= f.email_field :email, :class => "in", :autofocus => true %></div>
+  			<div class="field"><%= f.label :Mot_De_Passe %></div>
+  			<div class="field-block"><%= f.password_field :password, :class => "in" %></div>
+ 			<div> <%= f.submit "Connexion",  :class => "button" %></div>
+			<% end %>
+		</td>
+		<td id="deviseright">
+			<p>Il est nécessaire d'être connecté pour poster des commentaires.</p>
+			<%= render "devise/shared/links" %>
+		</td>
+	</tr>
+</table>
+</div>
+</div>

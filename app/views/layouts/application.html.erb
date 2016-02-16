@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title><%= title %></title>
+  <%= stylesheet_link_tag    "application", "jqte", :media => "all" %>
+  <%= javascript_include_tag "application" %>
+	<meta charset="UTF-8"> 
+ <%= csrf_meta_tags %>
+	<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-40475037-1', 'uragiranai-fansub.tk');
+  ga('send', 'pageview');
+
+</script>
+	<script>
+    	$(function(){
+      		$("#slides").slidesjs({
+        		height: 250,
+        		pagination: {
+      				active: false,  
+    			},
+      			navigation: {
+			    	active: false,
+		        	effect: "fade"
+    			},
+    			play: {
+      				active: false,
+      				effect: "fade",
+      				interval: 5000,
+           			auto: true,
+      				swap: true,
+      				pauseOnHover: false,
+      				restartDelay: 2500
+    			},
+				fade: {
+        			speed: 500,
+        			crossfade: true
+      			}
+      		});
+    	});
+  	</script>
+<%= favicon_link_tag 'favicon.ico' %>
+</head>
+<body>
+	<nav>  
+        <ul>  
+        	<li><%= link_to "Accueil", root_path%>
+			
+			<% if user_signed_in? %>
+					<ul class="mid">
+                        <li><%= link_to "Déconnexion", logout_path%></li>
+                <%else%>
+                <ul class="min">
+                        <li><%= link_to "Connexion", login_path%></li>
+                        <li><%= link_to "Inscription", signup_path%></li>
+                <%end%>
+		</ul>
+		</li>  
+        	<li><%= link_to "Staff", staffansub_path%></li> 
+        	<li><%= link_to "Téléchargements", ddl_path %>
+        		<ul class="mid">
+        			<li><%= link_to "Dédié", "http://ddl.uragiranai-fansub.tk/", target: "_blank"%></li>
+        			<li><%= link_to "Torrent", "http://www.nyaa.eu/?page=separate&user=173766", target: "_blank"%></li>
+        		</ul>
+        	</li>  
+        	<li>
+        		<%= link_to "Projets en Cours", projet_encours_path %>
+        		<ul class="max">
+	           	<% Projet.find(:all,:conditions => {:public => true,:finished => false}, :order => "created_at DESC").each do |projet| %>
+              		<li><%= link_to truncate_html(projet.title.force_encoding("UTF-8"), :length => 40) , projet %></li>    
+           		<% end %>
+            	</ul>
+        	</li> 
+        	<li>
+        		<%= link_to "Projets Terminés", projet_termines_path%>
+        	</li>  
+          	<li><%= link_to "Contact", "/contact-us"%></li>
+    	</ul>
+    </nav>  
+    <section id="ban">
+    	<div class="container">  
+    	<div id="slides">
+  		<% Progression.find(:all, :order => "created_at DESC").each do |progression| %>
+				
+				<table>
+					<tr>
+						<td>
+						<%= image_tag progression.image_url(:slide).to_s%>
+						</td>
+						<td class="slideright" valign="top">
+							<h2><i><%= progression.name.force_encoding("UTF-8") %></i></h2>
+							<hr class="hrslide" />
+							<div>Épisode N° <%= progression.episode %></div>
+							<div>Diffusion au Japon le <%= progression.diffusion.force_encoding("UTF-8") %></div>
+							<div>Traduction : <%= progression.traduction %>%</div>
+							<div>Qc Texte : <%= progression.qctext %>%</div>
+							<div>Qc Final : <%= progression.qcfinal %>%</div>
+						</td>
+					</tr>
+				</table>
+			<%end%>
+			<a href="#" class="slidesjs-previous slidesjs-navigation" id="prev"></a>
+     		<a href="#" class="slidesjs-next slidesjs-navigation" id="next"></a>	
+  		</div>
+  		</div>
+  		<%= link_to image_tag("arrow-next.png"), "javascript:document.getElementById('prev').click();", :class => "slidesjs-previous slidesjs-navigation"%>
+		<%= link_to image_tag("arrow-prev.png"), "javascript:document.getElementById('next').click();", :class => "slidesjs-next slidesjs-navigation"%>
+    </section>  
+    <div id="content">
+    	  	
+    	<aside>
+    		
+    		<% if user_signed_in? %>
+          	<div class="sidemodule">
+       			<h2 class="hmodule">Utilisateur</h2>
+       			<p class="cmodule">
+       				<%= current_user.username.force_encoding("UTF-8") %>, <%= link_to 'Deconnexion' , logout_path%> <br />
+       				<%= current_user.email %> <br />
+					<%= link_to "=> Accéder à  mon Compte", edit_user_registration_path%> 
+       				<% if current_user.admin? %>
+					<div class="warning"><p>Vous possédez des privilèges élevés.</p><%= link_to "=> Accéder au Panel Admin.", admin_path%></div>
+					<% elsif current_user.redacteur?%>
+					<div class="warning"><p>Vous possédez un certain nombre de Privilèges.</p><%= link_to "=> Accéder au Panel Admin.", admin_path%></div>
+					<%end %>
+				</p>
+       		</div>
+          	<%end%>
+       		<div class="sidemodule">
+       			<h2 class="hmodule">ChatBox</h2>
+				<script class="cmodule" id="sid0010000029277570100" >
+       			 	(function() {function async_load(){s.id="cid0010000029277570100";s.src='http://st.chatango.com/js/gz/emb.js';s.style.cssText="width:200px;height:500px;";s.async=true;s.text='{"handle":"uragiranai-fansub","styles":{"b":60,"f":50,"l":"999999","q":"999999","r":100,"s":1}}';var ss = document.getElementsByTagName('script');for (var i=0, l=ss.length; i < l; i++){if (ss[i].id=='sid0010000029277570100'){ss[i].id +='_';ss[i].parentNode.insertBefore(s, ss[i]);break;}}}var s=document.createElement('script');if (s.async==undefined){if (window.addEventListener) {addEventListener('load',async_load,false);}else if (window.attachEvent) {attachEvent('onload',async_load);}}else {async_load();}})();
+       			 </script>
+       		</div>
+       		<div class="sidemodule">
+       			<h2 class="hmodule">Partenaires</h2>
+       			<p class="cmodule">
+				<center>Fansubs</center>
+       				<% Partenaire.find(:all, :order => "created_at ASC", :conditions => {:partype => true }).each do |partenaire| %>
+       					<%= link_to image_tag(partenaire.image_url(:partenaires).to_s), partenaire.url, target: "_blanck"   %>
+       				<%end%>
+				<center>Autres</center>
+				<% Partenaire.find(:all, :order => "created_at ASC", :conditions => {:partype => false }).each do |partenaire| %>
+                                        <%= link_to image_tag(partenaire.image_url(:partenaires).to_s), partenaire.url, target: "_blanck"   %>
+                                <%end%>
+
+       			</p>
+       		</div>
+       		<div class="sidemodule">
+       			<h2 class="hmodule">Autres</h2>
+       			<p class="cmodule"><%= link_to  image_tag("facebk.png"), "https://www.facebook.com/UragiranaiFansub", target: "_blanck" %><%= link_to  image_tag("rss.png"), "/index.rss", target: "_blanck" %>
+
+       				<div>Total de visites : <b><%= Stat.first.visites%></b></div>
+       			</p>
+       			
+       		</div>
+
+       	</aside>
+    	<div id="mainContent">
+    		<% if flash[:error] %>
+      		<div class="flash">
+      		<p class="error"><%= flash[:error] %></p>
+    		</div>
+    	<% end %>
+    	<% if flash[:notice] %>
+      		<div class="flash">
+      		<p class="notice"><%= flash[:notice] %></p>
+    		</div>
+    	<% end %>  
+    	<% if Sa.first.active == true %>
+  			<div class="flash">
+      		<p class="notice"><%= Sa.first.content.html_safe%></p>
+    		</div>
+    	<%end%>
+	
+    		<section>  
+        		<%= yield.force_encoding("UTF-8") %>
+    		</section>
+    		
+    		</div>   
+  	</div>
+<footer  class="footer">  
+ © 2013 - Uragiranai Fansub - Code & Hosting by Fnux 
+</footer>
+</body>
+</html>
+
+
+
+
+

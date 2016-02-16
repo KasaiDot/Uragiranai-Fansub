@@ -1,0 +1,59 @@
+
+
+
+<table class="tbc">
+	<tr>
+		<td class="commentleft" valign="top">
+			<h2 class="h2p">Rechercher un commentaire :</h2>
+			<hr class="hrp" />
+			<div class="form">
+				<%= search_form_for @search do |f| %>
+  					
+  					<div class="field"><%= f.label :content_cont, "Contient :" %></div>
+    				<div class="field-block"><%= f.text_field :content_cont, :class => "in" %></div>
+  					
+  					<div class="field"><%= f.label :author_cont, "Auteur (Username) :" %></div>
+   					<div class="field-block"><%= f.text_field :author_cont, :class => "in" %></div>
+   					
+  					<div><%= f.submit "Chercher", :class => "button" %></div>
+				<% end %>
+				<hr class="hrp" />
+				<table class="tbc">
+				<thead>
+					<th>Commentaire</th>
+					<th>Auteur</th>
+				</thead>
+				
+				<tbody>
+					<% @results.each do |result| %>
+						<tr>
+			   				<td><%= link_to(truncate_html(result.content , length: 100), result) %></td>
+			   				<td><i><%= result.author %></i>
+			   				</td>
+		 				</tr>
+		 				
+					<% end %>
+					</tbody>
+				</table>
+			</div>
+		</td>
+		<td class="commentright" valign="top">
+			<h2 class="h2p">Derniers Commentaires : </h2>
+			<div>
+				<ul>
+				<% @comments.each do |comment| %>
+					<li>
+						<div>
+							<h4>Par <i><%= comment.author %></i> le <i><%= comment.updated_at %></i></h4>
+							<p><%= truncate_html comment.content , length: 100 %></p>
+								<%= link_to 'Lire la Suite ', comment %> | <%= link_to 'Éditer', edit_comment_path(comment) %> | <%= link_to 'Supprimer', comment, :method => 'delete', :confirm => 'Valider?'%>	</h5>
+						</div>		
+					</li>
+				<% end %>
+				<br />
+				<%= will_paginate @comments %>
+				</ul>
+			</div>
+		</td>
+	</tr>
+</table>

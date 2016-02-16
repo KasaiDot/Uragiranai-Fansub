@@ -1,0 +1,71 @@
+
+	<h1 class="h1p">Projets En Cours : 	<%= link_to "Créer un nouveau Projet.", projets_new_path %></h1>
+		<br />
+		<table class="tb">
+				<thead>
+				<tr>
+					<th class="thu">Nom du Projet</th>
+					<th class="thu">Visibilité</th>
+					<th class="thu">Date de Création</th>
+					<th class="thu">Editer le projet</th>
+					<th>Supprimer le Projet</th>			
+				</tr>
+			</thead>
+			<tbody>
+			<% Projet.find(:all,:conditions => {:finished => false}, :order => "created_at DESC").each do |projet| %>
+				<tr>
+					<td class="tdu">
+						<%= link_to projet.title, projet %>
+					</td>
+					<td class="tdu">
+						<% if projet.public == true%><b>Visible</b><% else %><b>Masqué</b><%end%>
+					</td>
+					<td class="tdu">
+						<%= l projet.created_at, :format => :sample %>
+					</td>
+					<td class="tdu">
+						<%= link_to 'Edit', edit_projet_path(projet) %>
+					</td>
+					<td>
+						<%= link_to 'Delete', projet, :method => 'delete', :confirm => 'Valider?'%>
+					</td>
+				</tr>			
+			<% end %>
+			</tbody>
+		</table>
+		<hr class="hrp" />
+	<h1 class="h1p">Projets Terminés : 	<%= link_to "Créer un nouveau Projet.", projets_new_path %></h1>
+		<br />
+		<table class="tb">
+				<thead>
+				<tr>
+					<th class="thu">Nom du Projet</th>
+					<th class="thu">Visibilité</th>
+					<th class="thu">Date de Création</th>
+					<th class="thu">Editer le projet</th>
+					<th>Supprimer le Projet</th>			
+				</tr>
+			</thead>
+			<tbody>
+			<% Projet.find(:all,:conditions => {:finished => true}, :order => "created_at DESC").each do |projet| %>
+				<tr>
+					<td class="tdu">
+						<%= link_to projet.title, projet %>
+					</td>
+					<td class="tdu">
+						<% if projet.public == true%><b>Visible</b><% else %><b>Masqué</b><%end%>
+					</td>
+					<td class="tdu">
+						<%= l projet.created_at, :format => :sample %>
+					</td>
+					<td class="tdu">
+						<%= link_to 'Edit', edit_projet_path(projet) %>
+					</td>
+					<td>
+						<%= link_to 'Delete', projet, :method => 'delete', :confirm => 'Valider?'%>
+					</td>
+				</tr>			
+			<% end %>
+			</tbody>
+		</table>
+<br />

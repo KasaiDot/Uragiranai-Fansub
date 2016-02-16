@@ -1,0 +1,12 @@
+
+<div id="projets">
+<h1>Projets en Cours</h1>
+<hr class="hrp2" />	
+<% Projet.find(:all,:conditions => {:public => true, :finished => false}, :order => "created_at DESC").each do |projet| %>
+	<div>
+			<h2><%= link_to projet.title, projet %></h2>
+			<%= link_to (image_tag (projet.image_url(:projet).to_s),:class => 'pil'), projet%>
+	</div>
+	<hr class="hrblog" />		
+<% end %>
+</div>

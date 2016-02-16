@@ -1,0 +1,71 @@
+<article class="blogPost">  
+        <header> 
+            <h2><i><%= link_to @new.title, @new %></i></h2>  
+         </header>  
+		<table>
+			<tr>
+				<td valign="top" class="articleleft">
+				<br />	
+				<% if @new.user.avatar_url.to_s.empty? == false %>
+                                        	<%= image_tag @new.user.avatar_url(:avatarnews).to_s, :class => "avatar"%>
+                                	<%else%>
+                                        	<%= image_tag("default.png", :class => "avatar") %>
+                                	<%end%>
+					<div><center><%= @new.user.username %></center>
+						<center><time><%= l @new.created_at, :format => :blog1 %></time></center>
+					</div>
+				</td>	
+				<td valign="top" class="articleright">
+					<% if @new.image.to_s.empty? == false%>
+						<% if @new.redim == false %>
+							<center><%= image_tag @new.image_url.to_s, :class => "imgblog" %></center>
+						<% else %>
+								<center><%= image_tag @new.image_url(:blog).to_s, :class => "imgblog" %></center>
+						<% end %>
+					<% end %>
+					<p><%= @new.content.html_safe %></p>
+					</td>
+			</tr>
+		</table>
+</article> 
+<h2>Commentaires :</h2>
+<div id="commentlist">
+	<table>
+		<% Comment.find_all_by_news_id(params[:id]).each do |comment| %>
+		<tr>
+			<td valign="top" class="commentright" >
+				<% if comment.user.avatar_url.to_s.empty? == false %>
+					<%= image_tag comment.user.avatar_url(:avatarnews).to_s, :class => "avatar"%>
+				<%else%>
+					<%= image_tag("default.png", :class => "avatar") %>
+				<%end%>
+			</td>
+			<td valign="top">			
+				<p>Par <i><%= comment.user.username %></i> le <time><i><%= l comment.created_at, :format => :sample %></i></time></p>
+				<p><%= comment.content.html_safe %></p>
+			</td>
+		</tr>
+		<% end %>
+	</table>
+</div>
+
+<div>
+<h2>Nouveau Commentaire :</h2>
+
+	<% if user_signed_in? %>
+		<%= form_for Comment.new do |f| %>
+			Auteur : <i><%= current_user.username%></i> 
+		 	<%= f.text_area :content , :size => "85x6"%>
+			<%= f.hidden_field :news_id , :value => params[:id] %>
+			<%= f.hidden_field :user_id , :value => current_user.id %>
+
+			<%= f.submit "Ajouter un commentaire",  :class => "button" %>
+
+		<% end %>
+	<%else%>
+		<p>Vous devez être connecté pour poster un commentaire : <%= link_to "Se Connecter", login_path%>.</p>
+	
+	<% end %>
+
+</div>		
+<script type="text/javascript">$("textarea").jqte();</script>

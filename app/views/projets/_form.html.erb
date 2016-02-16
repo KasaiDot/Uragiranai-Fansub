@@ -1,0 +1,81 @@
+<%= form_for @nprojet do |f| %>
+<br />
+	<table>
+		<tr>	
+			<td class="formleft">
+				<div class="field"><%= f.label :Titre%></div>
+				<div class="field-block"><%= f.text_field :title, :class => "in"  %></div>
+			</td>
+			<td class="formrightprojet">
+				<div class="field">Image/Screenshot Représentant le Projet :</div>
+				<div class="fiels-block"><%= f.file_field :image %></div>
+			</td>		
+		</tr>
+	</table>
+	
+	<div class="field">Informations sur l'animé :</div>
+	<div class="fiels-block"><%= f.text_area :infos, :size => "95x20" %></div>
+	<div class="field">Informations sur la réalisation :</div>
+	<div class="fiels-block"><%= f.text_area :realisation, :size => "95x20" %></div>
+	<div class"field">Synopsis :</div>
+	<div class="field-block"><%= f.text_area :synopsis , :size => "95x20"%></div>
+	<div class="field">OST/Trailers : le #MainContent fait 666px de largeur</div>
+	<div class="field-block"><%= f.text_area :ost , :size => "95x10" %></div>
+	
+	<table>
+		<tr>
+			<td class="formleftprojet2">
+				<div class="field">Projet Terminé ?</div>
+				<% if @nprojet.finished == true %>
+				<div class="field-block"><i>Oui : <%= f.radio_button :finished, "1",:checked => true  %> | Non : <%= f.radio_button :finished, "0"%></i></div>
+				<% else %>
+				<div class="field-block"><i>Oui : <%= f.radio_button :finished, "1" %> | Non : <%= f.radio_button :finished, "0",:checked => true %></i></div>
+				<% end %>
+			</td>
+			<td class="formrightprojet2">
+				<div class="field">Fiche accesible au Public ?</div>
+				<% if @nprojet.public == true %>
+					<div class="field-block"><i>Oui : <%= f.radio_button :public, "1",:checked => true  %> | Non : <%= f.radio_button :public, "0"%></i></div>
+				<% else %>
+					<div class="field-block"><i>Oui : <%= f.radio_button :public, "1" %> | Non : <%= f.radio_button :finished, "0",:checked => true %></i></div>
+				<% end %>
+			</td>
+		</tr>
+	</table>
+	<hr class="hrp" />
+	<h1 class="h1p">Téléchargements</h1>
+	
+	<h2 class="dl">Direct</h2>
+	<div class="dl">
+		<%= f.fields_for :links do |builder| %>
+  			<%= render 'link_fields', f: builder %>
+		<% end %>
+		<%= link_to_add_fields "Add Link", f, :links %>
+	</div>
+	<h2 class="dl">Jheberg</h2>
+	<div class="dl">
+		<%= f.fields_for :jhebergs do |builder| %>
+  			<%= render 'jheberg_fields', f: builder %>
+		<% end %>
+		<%= link_to_add_fields "Add Link", f, :jhebergs %>
+	</div>
+	<h2 class="dl">Multiup</h2>
+	<div class="dl">
+		<%= f.fields_for :multiups do |builder| %>
+  			<%= render 'multiup_fields', f: builder %>
+		<% end %>
+		<%= link_to_add_fields "Add Link", f, :multiups%>
+	</div>
+	<h2 class="dl">Torrent</h2>
+	<div class="dl">
+		<%= f.fields_for :torrents do |builder| %>
+  			<%= render 'torrent_fields', f: builder %>
+		<% end %>
+		<%= link_to_add_fields "Add Link", f, :torrents %>
+	</div>
+	<div>
+	<%= f.submit "Créer/Mettre à Jour", :class => "button" %>
+	</div>
+
+<% end %>
+<br />

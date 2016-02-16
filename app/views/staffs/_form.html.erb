@@ -1,0 +1,23 @@
+<div class="form">
+<%= form_for @staff do |f| %>
+<br />
+<table>
+	<tr>
+		<td class="formleft">
+			<div class="field">Pseudo :</div>
+			<div class="field-block"><%= f.text_field :pseudo, :class => "in" %></div>
+			<div class="field">Postes</div>
+			<div class="field-block"><%= f.text_field :postes,:class => "in" %></div>
+		</td>
+		<td class="formright">
+			<div class="field">Image de presentation :</div>
+			<div class="field-block"><%= f.file_field :avatar%></div>
+		</td>
+		</tr>
+</table>
+	<div class="field">Présentation :</div>
+	<div class="field-block"><%= f.text_area :presentation%></div>
+	<div><%= f.submit "Ajouter/Éditer", :class => "button"%></div>
+	<br />
+<% end %>
+</div>

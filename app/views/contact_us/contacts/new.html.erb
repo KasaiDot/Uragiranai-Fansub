@@ -1,0 +1,47 @@
+<h2><%= t('.contact_us') %></h2>
+<br />
+<div class="form">
+<%= form_for @contact, :url => contacts_path, :html => {:class => 'formtastic'} do |f| %>
+  <table class="tb">
+  	<tr>
+  		<td class="formleft">
+  <% if ContactUs.require_name %>
+	
+  	    <div class="field"><%= f.label :name, (t('.name') + content_tag(:abbr, '*', :class => 'required')).html_safe %></div>
+  	    <div class="field-block"><%= f.text_field :name, :class => "in" %></div>
+  	    <% if f.object.errors[:name].present? %>
+  	      <p class='inline-error'><%= f.object.errors[:name].join(' and ') %></p>
+  	    <% end %>
+
+  	<% end %>
+
+   	 <div class="field"><%= f.label :email, (t('.email') + content_tag(:abbr, '*', :class => 'required')).html_safe %></div>
+   	 <div class="field-block"><%= f.text_field :email, :class => "in" %></div>
+   	 <% if f.object.errors[:email].present? %>
+  	    <p class='inline-error'><%= f.object.errors[:email].join(' and ') %></p>
+  	  <% end %>
+		</td>
+		<td class="formright" valign="top">
+  	<% if ContactUs.require_subject %>
+  	
+  	    <div class="field"><%= f.label :subject, (t('.subject') + content_tag(:abbr, '*', :class => 'required')).html_safe %></div>
+  	    <div class="field-block"><%= f.text_field :subject, :class => "in" %></div>
+  	    <% if f.object.errors[:subject].present? %>
+  	      <p class='inline-error'><%= f.object.errors[:subject].join(' and ') %></p>
+  	    <% end %>
+  	<% end %>
+  			</td>
+  		</tr>
+  	</table>
+  	  <div class="field"><%= f.label :message, (t('.message') + content_tag(:abbr, '*', :class => 'required')).html_safe %></div>
+  	  <div class="field-block"><%= f.text_area :message %></div>
+  	  <% if f.object.errors[:message].present? %>
+  	    <p class='inline-error'><%= f.object.errors[:message].join(' and ') %></p>
+  	  <% end %>
+  
+
+    	<%= f.submit  "Envoyer", :class => 'submit create button' %>
+
+	<% end %>
+</div>
+<script type="text/javascript">$("textarea").jqte();</script>

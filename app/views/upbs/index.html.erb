@@ -1,0 +1,31 @@
+
+<h1>Mon Compte :</h1>
+
+<table>
+	<tr>
+		<td id="upbsleft" valign="top">
+			<p>Nom d'utilisateur : <%= current_user.username %></p>
+			<p>Email : <%= current_user.email %></p>
+			<p><strong><a href="http://gravatar.com">Change your avatar at Gravatar.com.</a></strong></p>
+		</td>
+		<td id="upbsright">
+		<%= image_tag avatar_url(current_user), :class => "avatar" %>
+		</td>
+	</tr>
+</table>
+
+<h1>Modifier mon Mot de Passe :</h1>
+<div class="form">
+<%= form_for current_user, :url => url_for(:controller => 'upbs', :action => 'update') do |f| %>
+  
+    <div class="field">Mot de Passe</div>
+    <div class="field-block"><%= f.password_field :password, :autocomplete => "off", :class => "in"  %></div>
+ 
+  
+    <div class="field">Confirmation du Mot de Passe</div>
+    <div class="field-block"><%= f.password_field :password_confirmation, :class => "in" %></div>
+
+    <div> <%= f.submit "Mettre à jour mon mot de passe",  :class => "button" %></div>
+<% end %>
+
+</div>

@@ -1,0 +1,60 @@
+<br />
+<div class="module">
+	<h2 class="hmodule"><% if @projet.finished == true%>[ Terminé ]  <% else%>[ En Cours ]  <%end%><%= @projet.title %></h2>
+	<center><%= image_tag @projet.image_url.to_s ,:class => 'pshow' %></center>
+	<h3 class="hmodulep">Informations Générales</h3>
+	<p><%= @projet.infos.html_safe %></p>
+	<hr class="hrp2" />
+	<h3 class="hmodulep">Informations sur la Réalisation</h3>
+	<p><%= @projet.realisation.html_safe %></p>
+	<hr class="hrp2" />	
+	<h3 class="hmodulep">Synopsis</h3>
+	<p><%= @projet.synopsis.html_safe %></p>
+	<hr class="hrp2" />
+	<h3 class="hmodulep">OST/Trailers</h3>
+	<p><%= @projet.ost.html_safe %></p>
+	<hr class="hrp2" />
+	<h3 class="hmodulep">DDL</h3>
+	<table class="projettable">
+		<thead>
+			<th>Direct</th>
+			<th>Jheberg</th>
+			<th>Multiup</th>
+			<th>Torrent</th>
+		</thead>
+		<tbody>
+		<tr>
+			<td class="tdb" valign="top">
+				<ul>	
+					<% for link in @projet.links %>
+						<li><%= link_to link.name, link.url %></li>
+					<% end %>
+				</ul>
+			</td class="tdb">
+			<td class="tdb" valign="top">
+				<ul>
+					<% for link in @projet.jhebergs %>
+						<li><%= link_to link.name, link.url %></li>
+					<% end %>
+				</ul>
+			</td>
+			<td class="tdb" valign="top">
+				<ul>
+					<% for link in @projet.multiups %>
+						<li><%= link_to link.name, link.url %></li>
+					<% end %>
+				</ul>
+			</td>
+			<td class="tdb2" valign="top">
+				<ul>
+					<% for link in @projet.torrents %>
+						<li><%= link_to link.name, link.url %></li>
+					<% end %>
+				</ul>
+			</td>
+		</tr>
+		</tbody>
+	</table>
+
+
+</div>

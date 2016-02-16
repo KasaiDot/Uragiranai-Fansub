@@ -1,0 +1,45 @@
+<h1 class="h1p">Upload d'Images :</h1>
+<div class="form">
+<%= form_for Imgup.new do |f| %>
+
+<table>
+	<tr>
+		<td class="formleft">
+			<div class="field">Titre de l'image :</div>
+			<div class="field-block"><%= f.text_field :title, :class => "in" %></div>
+		</td>
+		<td class="formright">
+			<div class="field">Image :</div>
+			<div class="field-block"><%= f.file_field :image %></div>
+		</td>
+		</tr>
+</table>
+	<div><%= f.submit "Uploader l'image", :class => "button"%></div>
+	<br />
+<% end %>
+</div>
+<hr class="hrp" />
+<div>
+<table class="tb">
+	<thead>
+		<tr>
+		<th class="thu">Titre de l'image :</th>
+		<th class="thu">URL de l'image :</th>
+		<th class="thu">Afficher l'image :</th>
+		<th>Actions</th>
+		</tr>
+	</thead>	
+	<tbody>	
+<% Imgup.find(:all, :order => "created_at DESC").each do |img| %>
+	<tr>  
+		<td class="tdu"><%= img.title%></td>
+		<td class="tburl">www.uragiranai-fansub.tk<%= img.image%></td>
+		<td class="tdu"><%= link_to "Afficher", "#{img.image}", target: "_blank"%></td>
+		<td><%= link_to 'Supprimer', img, :method => 'delete', :confirm => 'Valider?'%></td>
+	</tr>
+<% end %>
+	</tbody>
+</table>
+<br />
+</div>
+

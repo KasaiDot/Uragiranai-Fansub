@@ -1,0 +1,8 @@
+<fieldset class="fielddl">
+  <span class="field"><%= f.label :name, "Name" %></span>
+  <span class="field-block"><%= f.text_field :name, :class => "in" %></span>
+  <span class="field"><%= f.label :url, "Link" %></span>
+  <span class="field-block"><%= f.text_field :url, :class => "in" %></span>
+  <%= f.hidden_field :_destroy %>
+  <%= link_to "remove", '#', class: "remove_fields" %>
+</fieldset>

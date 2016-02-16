@@ -1,0 +1,9 @@
+<h1 class="h1p">Éditer un Commentaire :</h1>
+<div class="form">
+<%= form_for @comment do |f| %> 
+	<p>Vous ne pouvez que modifier le contenu du commentaire.</p>
+	<%= f.text_area :content , :size => "85x6"%>
+	<div><%= f.submit "Éditer le Commentaire", :class => "button" %></div>
+	<br />
+<% end %>
+</div>

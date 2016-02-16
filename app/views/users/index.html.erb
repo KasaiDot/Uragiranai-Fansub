@@ -1,0 +1,37 @@
+<h1 class="h1p">Gestion des Utilisateurs :</h1>
+<br />
+<table class="tb">
+	<thead id="tbhead">
+				<tr>
+					<th class="thu">Email de l'utilisateur</th>
+					<th class="thu">Pseudo</th>
+					<th class="thu">Editer l'utilisateur</th>
+					<th class="thu">Supprimer l'utilisateur</th>	
+					<th>Type de compte</th>		
+				</tr>
+			</thead>
+			<tbody>
+	<% @users.each do |user| %>
+		<tr id="tbtr">
+			<td class="tdu">
+				<%= user.email %>
+			</td>
+			<td class="tdu"><%= user.username %></td>
+			<td class="tdu">
+				<% if user.admin? == true %><b>You can't edit admin !</b><%else%><%= link_to 'Edit', edit_user_path(user) %><%end%>
+			</td>
+			<td class="tdu">
+				<% if user.admin? == true %><b>You can't delete admin !</b><%else%><%= link_to 'Delete', user, :method => 'delete', :confirm => 'Valider?'%><%end%>
+			</td>
+			<td>
+				<% if user.admin? == true %><b>Administrateur</b><% elsif user.redacteur? == true %><b>Rédacteur</b><%else%>Utilisateur<%end%>
+			</td>
+		</tr>	
+	<% end %>
+	
+	</tbody>
+</table>
+<br />
+<%= will_paginate @users %>
+<br />
+

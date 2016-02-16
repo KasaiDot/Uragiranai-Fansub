@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title><%= title %></title>
+  <%= stylesheet_link_tag    "admin","jqte","jquery-ui", :media => "all" %>
+  <%= javascript_include_tag "application" %>
+  <%= csrf_meta_tags %>
+  <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-40475037-1', 'uragiranai-fansub.tk');
+  ga('send', 'pageview');
+
+</script>
+<script type="text/javascript" src="//tinymce.cachefly.net/4.0/tinymce.min.js"></script>
+<script type="text/javascript">
+tinymce.init({
+    selector: "textarea",
+    plugins: [
+        "advlist autolink lists link image code"
+    ],
+    toolbar: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image"
+});
+</script>
+<%= favicon_link_tag 'favicon.ico' %>
+</head>
+<body>
+	</nav>	
+	<nav id="nav">
+			<ul>
+				<li><%= link_to "Admin", admin_path %></li>
+				<li><%= link_to "Team", staffs_path %></li>
+				<li><%= link_to "News", news_index_path %></li>
+				<li><%= link_to "Commentaires", comments_path %></li>
+				<li><%= link_to "Utilisateurs", users_path %></li>
+				<li><%= link_to "Projets", projets_path %></li>
+				<li><%= link_to "Upload", imgups_path %></li>
+				<li><%= link_to "Accéder à l'Accueil", root_path %></li>
+			</ul>
+		</nav>	
+	<section id="content">
+		
+		<% if flash[:notice] %>
+      		<div class="flash">
+      		<p class="notice"><%= flash[:notice] %></p>
+    		</div>
+    	<% end %>
+    	<% if flash[:error] %>
+      		<div class="flash">
+      		<p class="error"><%= flash[:error] %></p>
+    		</div>
+    	<% end %>
+    
+		<section>
+			<%= yield.force_encoding("UTF-8") %>
+		</section>
+		
+		<section id="footer">
+			© 2013 - Uragiranai Fansub - Code & Hosting by Fnux
+		</section>
+	</section>
+</body>
+</html>

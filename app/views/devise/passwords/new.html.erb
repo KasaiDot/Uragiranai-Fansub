@@ -1,0 +1,24 @@
+<div class="auth-form" id="login">		
+<div class="form">
+
+<h1>Mot de passe oublié ?</h1>
+
+<table class="form">
+	<tr>
+		<td id="deviseleft">
+		<%= form_for(resource, :as => resource_name, :url => password_path(resource_name), :html => { :method => :post }) do |f| %>
+  		<%= devise_error_messages! %>
+
+  		<div class="field"><%= f.label :email %><div>
+  		<div class="field-block"><%= f.email_field :email, :class => "in", :autofocusss=> true %></div>
+
+  		<div><%= f.submit "Envoyez-moi les instructions", :class => "button" %></div>
+		<% end %>
+		</td>
+		<td id="deviseright">
+			<%= render "devise/shared/links" %>
+		</td>
+	</tr>
+</table>
+</div>
+</div>

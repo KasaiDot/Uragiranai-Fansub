@@ -1,0 +1,83 @@
+<h1 class="h1p">Article d'en-tête</h1>
+<br />
+<%= form_for Forced.first , :url => forceds_path, :html => {:method => :update} do |f| %>
+
+	 <table>
+                <tr>
+                        <td class="formleftnews">
+                                <div class="field">Titre :</div>
+                                <div class="field-block"><%= f.text_field :title, :class => "in" %></div>
+                               <div class="field">Image de presentation (<i>Optionnel</i>) :</div>
+                                <div class="field-block">#file_field><!--<%= f.file_field :image %>--></div>
+				<p>
+ 			   <label>
+ 			     <%= f.check_box :remove_image %>
+ 			     Supprimer l'image
+  			  </label>
+  			</p>
+                        </td>
+                        <td class="formrightnews">
+                                <div class="field">Visible ?</div>
+                                <% if Forced.first.visible == true %>
+					<div class="field-block"><i>Oui : <%= f.radio_button :visible, "1",:checked => true  %> | Non : <%= f.radio_button :visible, "0" %></i></div>
+                                <% else %>
+					<div class="field-block"><i>Oui : <%= f.radio_button :visible, "1" %> | Non : <%= f.radio_button :visible, "0",:checked => true  %></i></div>
+				<% end %>
+				<div class="field">Redimensionner l'image de Présentation ?</div>
+                                <% if Forced.first.redim == true %>
+				<div class="field-block"><i>Oui : <%= f.radio_button :redim, "1",:checked => true  %> | Non : <%= f.radio_button :redim, "0" %></i></div>
+				<% else %>
+				<div class="field-block"><i>Oui : <%= f.radio_button :redim, "1" %> | Non : <%= f.radio_button :redim, "0",:checked => true  %></i></div>
+				<%end%>
+				<div class="field">Lier l'en-tête à un article : <%= f.check_box :link %></div>
+				<div class="field">ID de l'article lié : <%= f.text_field :news_id%></div>
+			
+                        </td>
+                </tr>
+        </table>
+        <div>
+                <div>Post :</div>
+                <%= f.text_area :content, :cols => "30", :rows => "10" %>
+        </div>
+        <%= f.hidden_field :user_id , :value => current_user.id %>
+        <br />
+	<div><%= f.submit "Mettre à jour l'article d'en-tête", :class => "button" %></div>
+
+        <br />
+
+<% end %>
+ 
+<h1 class="h1p">Liste des Posts : <%= link_to "Créer un nouveau Post", new_news_path %></h1>
+<hr class="hrp" />
+<% @news.each do |new| %>
+		<article class="blogPost">  
+        <header>  
+            <h2><%= link_to new.title, new %></h2>  
+         
+        </header>  
+		<table>
+			<tr>
+				<td valign="top" class="articleleft">
+					<%= image_tag new.user.avatar_url(:avatarnews).to_s, :class => "avatar"%>
+					<div><center><%= new.user.username %></center>
+						<center><time><%= l new.created_at, :format => :blog1 %></time></center>
+						<center><% if new.public == true%><b>Visible</b><% else%><b>Masqué</b><%end%></li></center>
+						<center><% if new.programmation.to_datetime > Time.now%><span class="warning"><b>Prévu le <%=new.programmation%></b></span><%end%></center>
+						<center><% if new.forced == true%><b>À l'affiche</b><%end%></center>
+						<center><%= link_to 'Editer', edit_news_path(new) %></center>
+						<center><%= link_to 'Supprimer', new, :method => 'delete', :confirm => 'Valider?'%></center>
+					</div>
+				</td>	
+				<td valign="top" class="articleright">
+					<% if new.image.to_s.empty? == false%>
+					<%= image_tag new.image_url(:adminblog).to_s, :class => "imgblog"%>
+					<% end %>
+					<p><%= truncate( new.content, :length => new.length).html_safe %></p><%= link_to 'Lire la suite', new %> - <%= link_to "#{Comment.find_all_by_news_id(new).count} commentaires", new %></td>
+				
+			</tr>
+		</table>
+		</article>
+		<hr class="hrblog" /> 
+							
+<% end %>
+<%= will_paginate @news %>

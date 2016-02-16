@@ -1,0 +1,85 @@
+<div class="form">
+<h1 class="h1p">Annonce :</h1>
+<table>
+	<tr>
+		<td class="formleft">
+	<%= form_for Sa.first, :url => others_path, :html => {:method => :sa} do |f| %>
+		<p>Actif : <i>Oui : <%= f.radio_button :active, "1" %> | Non : <%= f.radio_button :active, "0" %></i></p>
+		Message :   <span class="field-block"><%= f.text_field :content, :cols => "30", :rows => "10", :class => "in" %></span>
+		</td>
+		<td class="formright">
+		<%= f.submit "Mettre à Jour", :class => "button" %>
+		</td>
+	<% end %>
+	</tr>
+</table>
+</div>
+<hr class="hrp" />
+	<h1 class="h1p">Statistiques :</h1>
+	<p>Rendez-vous sur Google Analytics : <%= link_to "http://www.google.com/analytics/", "http://www.google.com/analytics/", target: "_blank"%></p>
+	<p>Identifiants Google de la Uragiranai (<%= link_to "uragiranai.fansub@gmail.com", "http://www.google.com/analytics/", target: "_blank"%>).</p>
+<hr class="hrp" />
+
+<h1 class="h1p">Progression des Animés - Slider :</h1>
+	<table class="progressiontb">
+		<% Progression.find(:all, :order => "created_at DESC").each do |progression| %>
+			<tr>
+				<div class="form">
+					<%= form_for progression do |f| %>
+					
+						<td class="progressionleft" valign="top">
+							<div>Episode N° : <%= f.text_field :episode,:class => "it" %></div>
+							<div>Traduction : <%= f.text_field :traduction, :class => "it" %>%</div>
+							<div>Qc Texte : <%= f.text_field :qctext, :class => "it" %>%</div>
+							<div>Qc Final : <%= f.text_field :qcfinal, :class => "it" %>%</div>				
+							<%= f.submit "Mettre à Jour", :class => "button"%> | <%= link_to 'Supprimer', progression, :method => 'delete', :confirm => 'Valider?', :class => "button"%>
+							</div>
+						</td>
+						<td class="progressionright" valign="top">
+							<div class="field-block">Nom de la Série : <%= f.text_field :name,:class => "in" %></div>
+							<div class="field-block">Date de Diffusion au Japon : <%= f.text_field :diffusion, :id => "datepicker",:class => "in" %></div>
+							<div class="field-block">Autre : <%= f.text_field :other , :class => "in"%></div>
+							<div class="field-block">Image : <%= f.file_field :image %> <i>(188x143)</i></div>	
+						</td>
+					<% end %>
+				</div>
+			</tr>
+			<br />
+		<% end %>
+	</table>
+	<br />
+	<center><h2><%= link_to "Nouveau Slide", Progression.new, :class => "button" %></h2></center>
+	<hr class="hrp" />
+	<% Partenaire.find(:all, :order => "created_at ASC").each do |partenaire| %>
+				<div class="form">
+					<%= form_for partenaire do |p| %>
+						<table class="tb">
+							<tr>
+								<td class="formleftnews">
+									<div class="field-block">Nom : <%= p.text_field :name,:class => "in" %></div>
+									<div class="field-block">URL : <%= p.text_field :url, :class => "in" %></div>
+									<% if partenaire.partype == true %>
+                          							<div class="field-block"><i>Fansub : <%= p.radio_button :partype, "1",:checked => true %> | Autres : <%= p.radio_button :partype, "0" %></i></div>
+									<% elsif partenaire.partype == false %>
+										<div class="field-block"><i>Fansub : <%= p.radio_button :partype, "1" %> | Autres : <%= p.radio_button :partype, "0", :checked => true %></i></div>
+									<% else%>
+										 <div class="field-block"><i>Fansub : <%= p.radio_button :partype, "1" %> | Autres : <%= p.radio_button :partype, "0" %></i></div>
+									<%end%> 
+								</td>
+								<td class="formrightnews">
+									<div class="field-block">Image : <%= p.file_field :image %></div>		
+									<div><%= p.submit "Mettre à Jour", :class => "button"%> | <%= link_to 'Supprimer', partenaire, :method => 'delete', :confirm => 'Valider?', :class => "button"%></div>
+								</td>
+							</tr>
+						</table>
+						<br />
+					<% end %>
+				</div>
+		<% end %>
+	
+	<br />
+	<center><h2><%= link_to "Ajouter un Partenaire", Partenaire.new, :class => "button" %></h2></center>
+	<br />
+
+	
+

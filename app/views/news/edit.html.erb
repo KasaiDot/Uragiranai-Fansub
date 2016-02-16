@@ -1,0 +1,49 @@
+<h1 class="h1p"> Éditer un Post :</h1>
+<div class="form">
+	<%= form_for @new do |f| %>
+	<table>
+		<tr>
+			<td class="formleftnews">
+				<div class="field">Titre :</div>
+				<div class="field-block"><%= f.text_field :title, :class => "in" %></div>
+				<div class="field">Actif à partir de : <span class="warning">Merci de Respecter le format !</span>
+					<p>Heure Sytème Actuelle : <i><%= Time.now %></i></p>
+				</div>
+				<div class="field-block"><%= f.text_field :programmation, :class => "in" %></div>
+				<div class="field">Image de presentation (<i>Optionnel</i>) :</div>
+				<div class="field-block"><%= f.file_field :image %></div>
+			</td>
+			<td class="formrightnews">
+				<div class="field">Visible ?</div>
+				<% if @new.public == true %>
+						<div class="field-block"><i>Oui : <%= f.radio_button :public, "1",:checked => true %> | Non : <%= f.radio_button :public, "0" %></i></div>
+					<% elsif @new.public == false %>
+						<div class="field-block"><i>Oui : <%= f.radio_button :public, "1" %> | Non : <%= f.radio_button :public, "0" ,:checked => true%></i></div>
+					<% else %>
+						<div class="field-block"><i>Oui : <%= f.radio_button :public, "1" %> | Non : <%= f.radio_button :public, "0" %></i></div>
+				<%end%> 
+				<div class="field">Redimensionner l'image de Présentation ?</div>
+				<% if @new.redim == true %>
+						<div class="field-block"><i>Oui : <%= f.radio_button :redim, "1",:checked => true %> | Non : <%= f.radio_button :redim, "0" %></i></div>
+					<% elsif @new.redim == false %>
+						<div class="field-block"><i>Oui : <%= f.radio_button :redim, "1" %> | Non : <%= f.radio_button :redim, "0" ,:checked => true%></i></div>
+					<% else %>
+						<div class="field-block"><i>Oui : <%= f.radio_button :redim, "1" %> | Non : <%= f.radio_button :redim, "0" %></i></div>
+				<%end%> 
+			</td>
+		</tr>
+	</table>
+	<div>
+		<div>Post :</div>
+		<%= f.text_area :content, :cols => "30", :rows => "10" %>
+	</div>
+	<div>
+		<div class="field">Nombre de caracteres affiches sur la Page d'accueil (Fonction "Lire la suite") :</div>
+		<div class="field-block"><%= f.text_field :length, :class => "in"%></div>
+	</div>
+	<div><%= f.submit "Créer/Mettre à jour la News",:class => "button" %></div>
+	
+	<br />
+
+<% end %>
+</div>

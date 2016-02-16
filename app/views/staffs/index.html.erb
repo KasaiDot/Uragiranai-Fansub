@@ -1,0 +1,33 @@
+<h1 class="h1p">Staff</h1>
+<h2>Texte de présentation :</h2>
+<p>
+<%= Page.first.staff.html_safe %>
+</p>
+<div class="form">
+	<%= form_for Page.first do |f| %>	
+		<div class="field-block"><%= f.text_area :staff, :cols => "30", :rows => "10", :class => "in" %></div>
+		<div><%= f.submit "Mettre à Jour la présentation", :class => "button" %></div>
+	<% end %>
+</div>
+<% Staff.find(:all, :order => "created_at ASC").each do |staff| %>
+	<hr class="hrp" />
+	<table>	
+	<tr>
+         <td valign="top">
+         	<%= image_tag staff.avatar_url(:staff).to_s, :class => 'avatar' %>
+         	<center><%= link_to 'Editer', edit_staff_path(staff) %></center>
+			<center><%= link_to 'Supprimer', staff, :method => 'delete', :confirm => 'Valider?'%></center>
+         </td>
+         <td valign="top">
+         	<div><b>Pseudo : </b><%= staff.pseudo %></div>
+         	<div><b>Postes : </b><%= staff.postes %></div>
+         	<div><b>Présentation : </b><%= staff.presentation.html_safe.force_encoding("UTF-8") %></div>
+         </td>  		 
+	</tr>
+	</table>
+	
+<% end %>
+</table>
+<h2>Ajouter un Membre :</h2>
+<%= render 'form' %>
+

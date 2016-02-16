@@ -1,0 +1,22 @@
+
+<h1>Staff</h1>
+
+<p>
+	<%= Page.first.staff.html_safe.force_encoding("UTF-8") %>
+</p>
+<hr class="hrblog" />
+
+<% Staff.find(:all, :order => "created_at ASC").each do |staff| %>
+	<table>	
+	<tr>
+         <td valign="top"><%= image_tag staff.avatar_url(:staff).to_s, :class => 'avatar' %></td>
+         <td valign="top">
+         	<div><b>Pseudo : </b><%= staff.pseudo %></div>
+         	<div><b>Postes : </b><%= staff.postes.force_encoding("UTF-8") %></div>
+         	<div><b> Présentation : </b><%= staff.presentation.html_safe.force_encoding("UTF-8") %></div>
+         </td>  		 
+	</tr>
+	</table>
+	<hr class="hrp" />
+<% end %>
+

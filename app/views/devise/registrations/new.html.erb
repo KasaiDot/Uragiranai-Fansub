@@ -1,0 +1,37 @@
+<div class="auth-form" id="login">		
+<div class="form">
+
+<h1>S'enregistrer</h1>
+
+<%= devise_error_messages! %>
+
+<table class="form">
+	<tr>
+		<td id="deviseleft">
+		<%= form_for(resource, :as => resource_name, :url => registration_path(resource_name)) do |f| %>
+ 		 
+		<div class="field">Nom d'utilisateur</div>
+ 		 <div class="field-block"><%= f.text_field :username, :class => "in" , :autofocus => true  %></div>
+ 		 <div class="field">Email</div>
+		  <div class="field-block"><%= f.text_field :email, :class => "in" %></div>
+
+		 <div class="field">Mot de Passe</div>
+		 <div class="field-block"><%= f.password_field :password , :class => "in" %></div>
+
+ 		 <div class="field">Confirmation du mot de passe</div>
+ 		 <div class="field-block"><%= f.password_field :password_confirmation , :class => "in" %></div>
+		
+		<div class="field">Captcha</div>
+		<center class="captcha>"><%= captcha_tag %></center>
+		<div class="field-block"><%= text_field_tag :captcha , nil, :class => "in" %></div>
+		  	<div> <%= f.submit "S'enregistrer",  :class => "button" %></div>
+		<% end %>
+		</td>
+		<td id="deviseright">
+			<p>Il est nécessaire de s'inscrire pour poster des commentaires ou pour recevoir la newsletter.</p>
+			<%= render "devise/shared/links" %>
+		</td>
+	</tr>
+</table>
+</div>
+</div>

@@ -1,0 +1,75 @@
+<br />
+<% if Forced.first.visible == true %>
+
+        <article class="blogPost">
+        <header>
+		<% if Forced.first.link == true %>
+            <h2><i><%= link_to Forced.first.title, Forced.first.news %></i></h2>
+		<% else %>
+            <h2><i><%= link_to Forced.first.title, root_path %></i></h2>
+		<% end %>
+        </header>
+                                <span valign="top" class="blogavt" style="padding-right:10px;">
+                                        <% if Forced.first.user.avatar_url.to_s.empty? == false %>
+                                                <%= image_tag Forced.first.user.avatar_url(:avatarnews).to_s, :class => "avatar"%>
+                                        <%else%>
+                                                <%= image_tag("default.png", :class => "avatar") %>
+                                        <%end%>
+                                        <div><center><%= Forced.first.user.username %></center>
+                                                <center><time><%= l Forced.first.created_at, :format => :blog1 %></time></center>
+                                        </div>
+                                </span>
+                                        <% if Forced.first.image.to_s.empty? == false%>
+                                                <% if Forced.first.redim == false %>
+                                                        <center><%= image_tag Forced.first.image_url.to_s, :class => "imgblog" %></center>
+                                                <% else %>
+                                                                <center><%= image_tag Forced.first.image_url(:blog).to_s, :class => "imgblog" %></center>
+                                                <% end %>
+                                        <% end %>
+					
+                                        <p><%= Forced.first.content.html_safe %></p>
+                                        <% if Forced.first.link == true %>
+						<%= link_to 'Lire la suite', Forced.first.news %> - <%= link_to "#{Comment.find_all_by_news_id(Forced.first.news).count} commentaires", Forced.first.news %>
+					<% end %>
+
+                </article>
+                <hr class="hrblog" />
+
+<% end %>
+
+<% @news.each do |new| %>
+ 	<% if new.public == true %>
+	<article class="blogPost">  
+        <header>  
+            <h2><i><%= link_to new.title, new %></i></h2> 
+        </header> 
+				<span valign="top" class="blogavt" style="padding-right:10px;">
+					<% if new.user.avatar_url.to_s.empty? == false %>
+                                        	<%= image_tag new.user.avatar_url(:avatarnews).to_s, :class => "avatar"%>
+                                	<%else%>
+                                        	<%= image_tag("default.png", :class => "avatar") %>
+                                	<%end%>
+					<div><i><center><%= new.user.username %></center>
+						<center><time><%= l new.created_at, :format => :blog1 %></time></center>
+					</i></div>
+				</span>
+					<% if new.image.to_s.empty? == false%>
+						<% if new.redim == false %>
+							<center><%= image_tag new.image_url.to_s, :class => "imgblog" %></center>
+						<% else %>
+								<center><%= image_tag new.image_url(:blog).to_s, :class => "imgblog" %></center>
+						<% end %>
+					<% end %>
+
+					<p><%= truncate( new.content, :length => new.length).html_safe %></p>
+					<%= link_to 'Lire la suite', new %> - <%= link_to "#{Comment.find_all_by_news_id(new).count} commentaires", new %>
+					
+		</article>
+		<hr class="hrblog" />
+ 
+		<% end %>
+<% end %>
+<%= will_paginate @news %>
+
+
+
